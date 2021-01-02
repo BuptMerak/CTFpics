@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- encoding: utf-8 -*-
 import os
 import stegpy
 import subprocess
@@ -36,7 +38,8 @@ def checkjpg(pic):
             os.system('./jphide/jpseek.exe {} flag.txt'.format(pic))
             print("Please check the message in the flag.txt")
             os.system('cat flag.txt')
-        if 'jphide(**)' in result1:
+        if 'jphide' in result1:
+            print("start steghide")
             print("Maybe the steghide if you have the password please input 1 and input the password")
             print("If you Dont have the password please input 2")
             ok=input()
@@ -46,16 +49,8 @@ def checkjpg(pic):
                 os.system('steghide extract -sf {} -p {}'.format(pic,passw))
             if '2' in ok:
                 print("[+]------------------------Breaking--------------------")
-                os.system('python3 steg_brute.py -b -d password.txt -f {} > steghide.txt'.format(pic))
-                tt3=open('steghide.txt','r')
-                line1=tt3.readline()
-                while line1:
-                    if 'find' in line1:
-                        find1=line1
-                        print(line1)
-                        break
-                    line1=tt3.readline()
-                os.system('steghide extract -sf {} -p {}'.format(pic,find1))
+                os.system('python3 break.py')
+
         if 'outguess' in result1:
             print("Please input the password and maybe it doesn't need any password")
             passo=input()
